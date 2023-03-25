@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+
     }
 
     public Vector2 GetMovementVectorNormalizedRight()
@@ -23,10 +24,18 @@ public class PlayerInput : MonoBehaviour
         return inputVector;
     }
 
-    public Vector2 GetMovementVectorNormalizedLeft() 
+    public Vector2 GetAimVectorNormalizedLeft() 
     {
         Vector2 inputVector = playerInputActions.Player.Aim.ReadValue<Vector2>();
         inputVector = inputVector.normalized;
         return inputVector;
     }
+
+    public bool GetFireButton() 
+    { 
+        var fire = playerInputActions.Player.Fire.triggered;
+        return fire;
+    }
+
+
 }

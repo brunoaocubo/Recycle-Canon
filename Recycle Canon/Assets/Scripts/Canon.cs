@@ -18,8 +18,8 @@ public class Canon : MonoBehaviour
     void Update()
     {
         // Obtem o vetor de movimento normalizado
-        Vector2 inputVector = playerInput.GetMovementVectorNormalizedLeft();
-        
+        Vector2 inputVector = playerInput.GetAimVectorNormalizedLeft();
+        bool fire = playerInput.GetFireButton();
         /*
         float angle = Mathf.Atan2(inputVector.x, inputVector.y) * Mathf.Rad2Deg;
         angle = Mathf.Clamp(angle, -90f, 90f);
@@ -42,4 +42,5 @@ public class Canon : MonoBehaviour
         // Rotaciona o canhão suavemente em direção à rotação desejada
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
+
 }
