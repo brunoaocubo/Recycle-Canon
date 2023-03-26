@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-
     private PlayerInputActions playerInputActions;
 
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
-
     }
 
     public Vector2 GetMovementVectorNormalizedRight()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-
-
         inputVector = inputVector.normalized;
-
+        
         return inputVector;
     }
 
@@ -28,14 +24,14 @@ public class PlayerInput : MonoBehaviour
     {
         Vector2 inputVector = playerInputActions.Player.Aim.ReadValue<Vector2>();
         inputVector = inputVector.normalized;
+        
         return inputVector;
     }
 
-    public bool GetFireButton() 
-    { 
-        var fire = playerInputActions.Player.Fire.triggered;
-        return fire;
+    public Touch GetTouchScreen() 
+    {
+        Touch touch = Input.GetTouch(0);
+        
+        return touch;
     }
-
-
 }

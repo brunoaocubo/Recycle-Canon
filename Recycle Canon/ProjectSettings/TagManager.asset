@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - TrashPlastic
+  - TrashOrganic
+  - TrashMetal
+  - ContainerPlastic
+  - ContainerOrganic
+  - ContainerMetal
   layers:
   - Default
   - TransparentFX
