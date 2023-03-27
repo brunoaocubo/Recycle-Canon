@@ -18,11 +18,6 @@ public class CollectorContainer : MonoBehaviour
     public int PlasticAmmo { get => plasticAmmo; }                                          
     public int MetalAmmo { get => metalAmmo; }
 
-    private void Update()
-    {
-        Debug.Log(organicAmmo);
-    }
-
     public void AddTrashOrganic(int TrashOrganic) 
     {
         ammountTrashOrganic += TrashOrganic;

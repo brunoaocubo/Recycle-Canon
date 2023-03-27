@@ -62,7 +62,8 @@ public class Canon : MonoBehaviour
             case AmmoType.Organic:
                 if(collectorContainer.OrganicAmmo > 0) 
                 {
-                    Instantiate(bulletsPrefab[0], pivotCanon.position, Quaternion.identity);
+
+                    Instantiate(bulletsPrefab[0], pivotCanon.position, pivotCanon.rotation);
                     collectorContainer.DecreaseOrganicAmmo();
                 }
                 break;
@@ -70,21 +71,20 @@ public class Canon : MonoBehaviour
             case AmmoType.Plastic:
                 if(collectorContainer.PlasticAmmo > 0) 
                 {
-                    Instantiate(bulletsPrefab[1], pivotCanon.position, Quaternion.identity);
+                    Instantiate(bulletsPrefab[1], pivotCanon.position, pivotCanon.rotation);
                     collectorContainer.DecreasePlasticAmmo();
                 }
                 break;
 
             case AmmoType.Metal:
                 if(collectorContainer.MetalAmmo > 0) 
-                {
-                    Instantiate(bulletsPrefab[2], pivotCanon.position, Quaternion.identity);
+                {                 
+                    Instantiate(bulletsPrefab[2], pivotCanon.position, pivotCanon.rotation);
                     collectorContainer.DecreaseMetalAmmo();
                 }
                 break;
         }
     }
-
 
     private void RotationCanon() 
     {

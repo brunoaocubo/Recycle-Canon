@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         collectorContainer = FindObjectOfType<CollectorContainer>();
+        
     }
 
     void Update()
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
                 PlayerCheckObjects();
             }
         }
+
     }
 
     private void PlayerMovement() 
