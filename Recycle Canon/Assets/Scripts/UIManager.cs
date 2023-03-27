@@ -1,38 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public Text trashOrganicText;
-    public Text trashPlasticText;
-    public Text trashMetalText;
-    public Text organicAmmoText;
-    public Text plasticAmmoText;
-    public Text metalAmmoText;
+    [SerializeField] private TMP_Text trashOrganicText;
+    [SerializeField] private TMP_Text trashPlasticText;
+    [SerializeField] private TMP_Text trashMetalText;
+    [SerializeField] private Text organicAmmoText;
+    [SerializeField] private Text plasticAmmoText;
+    [SerializeField] private Text metalAmmoText;
 
     [SerializeField] private CollectorContainer collectorContainer;
     private Player player;
 
+    private void Start()
+    {
 
-    public void SetCollectorContainer(CollectorContainer collectorContainer)
+    }
+
+    private void SetCollectorContainer(CollectorContainer collectorContainer)
     {
         this.collectorContainer = collectorContainer;
     }
 
-    public void SetPlayer(Player player)
+    private void SetPlayer(Player player)
     {
         this.player = player;
     }
 
     void Update()
     {
-        // Atualiza as informações de texto com as quantidades atuais
-        //trashOrganicText.text = "Orgânico: " + collectorContainer.AmmountTrashOrganic.ToString();
-        //trashPlasticText.text = "Plástico: " + collectorContainer.AmmountTrashPlastic.ToString();
-        //trashMetalText.text = "Metal: " + collectorContainer.AmmountTrashMetal.ToString();
+        trashOrganicText.text = collectorContainer.AmmountTrashOrganic.ToString();
+        trashPlasticText.text = collectorContainer.AmmountTrashPlastic.ToString();
+        trashMetalText.text = collectorContainer.AmmountTrashMetal.ToString();
         organicAmmoText.text = collectorContainer.OrganicAmmo.ToString();
         plasticAmmoText.text = collectorContainer.PlasticAmmo.ToString();
         metalAmmoText.text = collectorContainer.MetalAmmo.ToString();
-
     }
 }

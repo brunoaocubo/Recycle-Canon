@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WeaponSelector : MonoBehaviour
 {
-    private Canon canon;
+    [SerializeField] private Canon canon;
 
     private void Start()
     {
-        canon = FindObjectOfType<Canon>();
+        canon = GetComponent<Canon>();
     }
 
     public void SelectOrganicAmmo() 

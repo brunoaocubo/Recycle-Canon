@@ -39,7 +39,7 @@ public class Canon : MonoBehaviour
     void Update()
     {
         RotationCanon();
-
+        
         if (Input.touchCount > 0) 
         {
             Touch touch = playerInput.GetTouchScreen();
@@ -49,6 +49,7 @@ public class Canon : MonoBehaviour
                 Fire();
             }          
         }
+        
     }
     public void SelectAmmoType(AmmoType ammoType)
     {

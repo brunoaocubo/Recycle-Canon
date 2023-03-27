@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-[ExecuteInEditMode]
 public class ControlCamera : MonoBehaviour
 {
-    public CinemachineVirtualCamera virtualCamera;
+    private CinemachineVirtualCamera virtualCamera;
     public CinemachineCameraOffset cameraOffset;
 
     public float orthoSyzeDefault;
@@ -17,8 +16,6 @@ public class ControlCamera : MonoBehaviour
     Vector2 resolution0 = new Vector2(1280, 720);
     Vector2 resolution1 = new Vector2(1920, 1080);
     Vector2 resolution2 = new Vector2(2560, 1080);
-
-
 
     void Start()
     {

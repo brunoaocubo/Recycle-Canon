@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private CollectorContainer collectorContainer;
+    
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotateSpeed = 15f;
-
     private float sphereCastRadius = 1.25f;
     private float playerRadius = 0.7f;
     private float playerHeight = 2f;
     private bool isWalking;
 
+
+
     void Start()
     {
         collectorContainer = FindObjectOfType<CollectorContainer>();
-        
     }
 
     void Update()
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour
                 PlayerCheckObjects();
             }
         }
-
     }
 
     private void PlayerMovement() 
@@ -41,8 +39,24 @@ public class Player : MonoBehaviour
         Vector3 moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float moveDistance = moveSpeed * Time.deltaTime;
+
+        // Obter o tamanho da tela em pixels
+        Vector2 screenSize = new Vector2(Screen.height, Screen.width);
+
+        // Obter a largura da tela em unidades do mundo
+        float screenWidth = Camera.main.orthographicSize * 2f * Camera.main.aspect;
+
+        // Calcular o limite da tela em unidades do mundo
+        float screenLimitX = screenWidth / 2f;
+        float screenLimitZ = Camera.main.orthographicSize;
+
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance);
 
+        // Restringir o movimento para dentro dos limites da tela
+        Vector3 newPosition = transform.position + moveDirection * moveDistance;
+        newPosition.x = Mathf.Clamp(newPosition.x, -screenLimitX, screenLimitX);
+        newPosition.z = Mathf.Clamp(newPosition.z, -screenLimitZ, screenLimitZ);
+        
         if (!canMove)
         {
             // Tentar movimentar nas direções pré-definidas
@@ -67,14 +81,15 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
+        
         if (canMove)
         {
-            transform.position += moveDirection * moveDistance;
+            //transform.position += moveDirection * moveDistance;
+            transform.position = newPosition;
         }
 
-        isWalking = moveDirection != Vector3.zero;
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
+        isWalking = moveDirection != Vector3.zero;
     }
 
     private void PlayerCheckObjects() 
@@ -116,11 +131,13 @@ public class Player : MonoBehaviour
             }
         }
     }
+    /*
     private void OnDrawGizmos()
     {
         Vector3 sphereCast = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z);
         float sphereCastRadius = 1.25f;
         Gizmos.DrawSphere(sphereCast, sphereCastRadius);
     }
+    */
 }
 
