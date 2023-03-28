@@ -10,9 +10,6 @@ public class Player : MonoBehaviour
     private float sphereCastRadius = 1.25f;
     private float playerRadius = 0.7f;
     private float playerHeight = 2f;
-    private bool isWalking;
-
-
 
     void Start()
     {
@@ -75,7 +72,6 @@ public class Player : MonoBehaviour
 
                 if (canMove)
                 {
-                    // Movimentar na direção encontrada
                     moveDirection = direction;
                     break;
                 }
@@ -84,12 +80,10 @@ public class Player : MonoBehaviour
         
         if (canMove)
         {
-            //transform.position += moveDirection * moveDistance;
             transform.position = newPosition;
         }
 
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-        isWalking = moveDirection != Vector3.zero;
     }
 
     private void PlayerCheckObjects() 
@@ -127,7 +121,6 @@ public class Player : MonoBehaviour
                 case "ContainerMetal":
                     collectorContainer.ReloadMetalAmmo();
                     break;
-
             }
         }
     }
