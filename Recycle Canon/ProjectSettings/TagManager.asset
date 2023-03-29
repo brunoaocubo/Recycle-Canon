@@ -10,6 +10,7 @@ TagManager:
   - ContainerPlastic
   - ContainerOrganic
   - ContainerMetal
+  - City
   layers:
   - Default
   - TransparentFX

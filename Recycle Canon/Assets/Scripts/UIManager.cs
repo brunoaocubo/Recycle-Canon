@@ -10,13 +10,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text organicAmmoText;
     [SerializeField] private Text plasticAmmoText;
     [SerializeField] private Text metalAmmoText;
+    [SerializeField] private TMP_Text livesPlayerText;
+    [SerializeField] private Slider healthCity;
+
 
     [SerializeField] private CollectorContainer collectorContainer;
-    private Player player;
+    [SerializeField] private PlayerStatus playerStatus;
+    [SerializeField] private City cityStatus;
+
 
     private void Start()
     {
-
+        healthCity.maxValue = cityStatus.Health;
     }
 
     private void SetCollectorContainer(CollectorContainer collectorContainer)
@@ -24,9 +29,14 @@ public class UIManager : MonoBehaviour
         this.collectorContainer = collectorContainer;
     }
 
-    private void SetPlayer(Player player)
+    private void SetPlayerStatus(PlayerStatus playerStatus)
     {
-        this.player = player;
+        this.playerStatus = playerStatus;
+    }
+
+    private void SetCityStatus(City cityStatus)
+    {
+        this.cityStatus = cityStatus;
     }
 
     void Update()
@@ -37,5 +47,7 @@ public class UIManager : MonoBehaviour
         organicAmmoText.text = collectorContainer.OrganicAmmo.ToString();
         plasticAmmoText.text = collectorContainer.PlasticAmmo.ToString();
         metalAmmoText.text = collectorContainer.MetalAmmo.ToString();
+        livesPlayerText.text = playerStatus.Lives.ToString();
+        healthCity.value = cityStatus.Health;
     }
 }

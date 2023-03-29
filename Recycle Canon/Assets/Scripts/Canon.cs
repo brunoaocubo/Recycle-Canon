@@ -49,7 +49,7 @@ public class Canon : MonoBehaviour
                 Fire();
             }          
         }
-        
+ 
     }
     public void SelectAmmoType(AmmoType ammoType)
     {
@@ -91,7 +91,6 @@ public class Canon : MonoBehaviour
     {
         // Obtem o vetor de movimento normalizado
         Vector2 inputVector = playerInput.GetAimVectorNormalizedLeft();
-
 
         // Se houver movimento no joystick
         if (inputVector.magnitude > 0.1f)
