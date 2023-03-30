@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     public TypeEnemy typeEnemy;
     public GameObject[] trashDrops;
     private Transform currentTarget;
-    public Transform targetCity; 
+    public GameObject[] targetCity = new GameObject[3]; 
     public Transform targetPlayer;
     private Rigidbody rigidbody;
 
@@ -24,18 +24,20 @@ public class EnemyController : MonoBehaviour
     private float rotateSpeed = 10f;
     public bool isGrounded;
 
-
     public float rangeDetected; 
     public int damagePlayer; 
     public int damageCity;
 
     public float sphereCastRadius = 0.7f;
+    public int randomIndexTarget;
 
+    public float timer = 0;
     void Start()
     {
-        currentTarget = targetCity;
+        randomIndexTarget = Random.Range(0, 3);
+        currentTarget = targetCity[randomIndexTarget].transform;
         rigidbody = GetComponent<Rigidbody>();
-        targetCity = FindObjectOfType<City>().transform;
+        //targetCity = FindObjectOfType<City>().transform;
         targetPlayer = FindObjectOfType<Player>().transform;
 
         //typeEnemy = (TypeEnemy)Random.Range(0, 2);
@@ -65,7 +67,7 @@ public class EnemyController : MonoBehaviour
         }
         else if (distanceToPlayer > rangeDetected)
         {
-            currentTarget = targetCity;
+            currentTarget = targetCity[randomIndexTarget].transform;
             currentMoveSpeed = defaultSpeed;
         }
 
@@ -76,12 +78,27 @@ public class EnemyController : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+
+
+    }
+    private void FixedUpdate()
+    {
+        float distanceToCity = Vector3.Distance(transform.position, targetCity[randomIndexTarget].transform.position);
+        
+        if (distanceToCity >= rangeDetected)
+        {
+            timer -= Time.deltaTime;
+            DropTrash();
+        }
     }
 
-    private void OnDrawGizmos()
-    {
-        Vector3 sphereCast = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        Gizmos.DrawSphere(sphereCast, sphereCastRadius);
+    private void DropTrash() 
+    {        
+        if (timer <= 0)
+        {
+            Instantiate(trashDrops[(int)typeEnemy], transform.position, Quaternion.identity);
+            timer = 6f;
+        }       
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -89,14 +106,14 @@ public class EnemyController : MonoBehaviour
         if(collision.gameObject.tag == "Player") 
         {
             collision.collider.GetComponent<PlayerStatus>().TakeDamage(damagePlayer);
-            Instantiate(trashDrops[(int)typeEnemy], transform.position, Quaternion.identity);
+            DropTrash();
             Destroy(this.gameObject);
         }
 
         else if(collision.gameObject.tag == "City") 
         {
             collision.collider.GetComponent<City>().TakeDamage(damageCity);
-            Instantiate(trashDrops[(int)typeEnemy], transform.position, Quaternion.identity);
+            DropTrash();
             Destroy(this.gameObject);
         }
     }

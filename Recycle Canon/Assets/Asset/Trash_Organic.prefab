@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9104285973210083472}
   - component: {fileID: 9104285973210083487}
   - component: {fileID: 270239323}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trash_Organic
   m_TagString: TrashOrganic
   m_Icon: {fileID: 0}
@@ -112,5 +112,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 10
+  m_Constraints: 90
   m_CollisionDetection: 0

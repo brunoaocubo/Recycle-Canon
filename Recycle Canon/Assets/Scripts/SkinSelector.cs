@@ -9,13 +9,13 @@ public class SkinSelector : MonoBehaviour
     public void PlayGame() 
     {
         PlayerPrefs.SetInt("indexSelectedCharacter", indexSelectedCharacter);
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene(3, LoadSceneMode.Single);
     }
 
     public void NextCharacter() 
     {
         charactersSelect[indexSelectedCharacter].SetActive(false);
-        indexSelectedCharacter = (indexSelectedCharacter + 1) % charactersSelect.Length;
+        indexSelectedCharacter = (indexSelectedCharacter + 1) % charactersSelect.Length; //Quando chegar no final do array vai contar do inicio de novo
         charactersSelect[indexSelectedCharacter].SetActive(true);
     }
 

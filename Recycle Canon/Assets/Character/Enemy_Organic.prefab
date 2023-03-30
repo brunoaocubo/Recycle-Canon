@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 862575503935187169}
   - component: {fileID: 862575503935187168}
   - component: {fileID: 862575503935187171}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy_Organic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,8 +135,10 @@ MonoBehaviour:
   - {fileID: 9104285973210083486, guid: 5180c153327c54941912c11cb04def92, type: 3}
   - {fileID: 5160915358309369932, guid: a9b8dbb3bc6870b4d8f6ef3b482327d3, type: 3}
   - {fileID: 7910346553925140753, guid: 06bfeb975283586418a1ba092b1a38d7, type: 3}
-  targetCity: {fileID: 637775726313119651, guid: a85ea9854fd46664cad63a80b8720d96,
-    type: 3}
+  targetCity:
+  - {fileID: 5117430183458602718, guid: d23b351134b0fc7488d80976116dcf01, type: 3}
+  - {fileID: 800688002568714680, guid: 58d8404aa2d520449a0f3b76c863282a, type: 3}
+  - {fileID: 9188702616711229329, guid: 1120f193413a22f4ebb83ebdf38b3ac9, type: 3}
   targetPlayer: {fileID: 2608483271059921469, guid: 81f103bc9e3604047a5b5813f5430f76,
     type: 3}
   defaultSpeed: 3
@@ -146,6 +148,7 @@ MonoBehaviour:
   damagePlayer: 1
   damageCity: 2
   sphereCastRadius: 0.7
+  randomIndexTarget: 0
 --- !u!136 &862575503935187168
 CapsuleCollider:
   m_ObjectHideFlags: 0

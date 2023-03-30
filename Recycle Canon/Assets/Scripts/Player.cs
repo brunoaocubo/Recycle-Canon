@@ -47,12 +47,12 @@ public class Player : MonoBehaviour
         float screenLimitX = screenWidth / 2f;
         float screenLimitZ = Camera.main.orthographicSize;
 
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance);
-
         // Restringir o movimento para dentro dos limites da tela
         Vector3 newPosition = transform.position + moveDirection * moveDistance;
         newPosition.x = Mathf.Clamp(newPosition.x, -screenLimitX, screenLimitX);
         newPosition.z = Mathf.Clamp(newPosition.z, -screenLimitZ, screenLimitZ);
+
+        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance);
         
         if (!canMove)
         {

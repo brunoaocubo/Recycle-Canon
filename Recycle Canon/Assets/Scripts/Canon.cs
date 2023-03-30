@@ -44,7 +44,7 @@ public class Canon : MonoBehaviour
         {
             Touch touch = playerInput.GetTouchScreen();
 
-            if (touch.position.x < screenWidth/3 && touch.position.y < screenHeight/3 && touch.phase == TouchPhase.Began)
+            if (touch.position.x < screenWidth/2 && touch.position.y < screenHeight/2 && touch.phase == TouchPhase.Began)
             {
                 Fire();
             }          
