@@ -17,20 +17,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         canon = FindObjectOfType<Canon>();
-
-        /*
-        switch (gameObject.tag)
-        {
-            case "BulletOrganic":
-                typeBullet = TypeBullet.Organic;
-                break;
-            case "BulletPlastic":
-                typeBullet = TypeBullet.Plastic;
-                break;
-            case "BulletMetal":
-                typeBullet = TypeBullet.Metal;
-                break;
-        }*/
+        Destroy(gameObject, 5f);
     }
 
     void Update()
@@ -43,26 +30,44 @@ public class Bullet : MonoBehaviour
         switch (canon.ammoType)
         {
             case AmmoType.Organic:
-                if(collision.collider.CompareTag("EnemyPlastic") || collision.collider.CompareTag("EnemyMetal")) 
+                if(collision.collider.CompareTag("EnemyPlastic") || collision.collider.CompareTag("EnemyMetal") || collision.collider.CompareTag("Boss")) 
                 {
                     collision.collider.GetComponent<EnemyStatus>().TakeDamage(damage);
                     Destroy(gameObject);
                 }
+
+                if (collision.collider.CompareTag("Boss"))
+                {
+                    collision.collider.GetComponent<EnemyStatus>().TakeDamageBoss(damage);
+                    Destroy(gameObject);
+                }
                 break;
+
             case AmmoType.Plastic:
                 if (collision.collider.CompareTag("EnemyOrganic"))
                 {
                     collision.collider.GetComponent<EnemyStatus>().TakeDamage(damage);
                     Destroy(gameObject);
+                }
 
+                if (collision.collider.CompareTag("Boss")) 
+                {
+                    collision.collider.GetComponent<EnemyStatus>().TakeDamageBoss(damage);
+                    Destroy(gameObject);
                 }
                 break;
+
             case AmmoType.Metal:
-                if (collision.collider.CompareTag("EnemyOrganic"))
+                if (collision.collider.CompareTag("EnemyOrganic") || collision.collider.CompareTag("Boss"))
                 {
                     collision.collider.GetComponent<EnemyStatus>().TakeDamage(damage);
                     Destroy(gameObject);
+                }
 
+                if (collision.collider.CompareTag("Boss"))
+                {
+                    collision.collider.GetComponent<EnemyStatus>().TakeDamageBoss(damage);
+                    Destroy(gameObject);
                 }
                 break;
         }

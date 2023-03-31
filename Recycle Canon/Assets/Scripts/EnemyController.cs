@@ -5,37 +5,38 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private Transform currentTarget;
+   
     [SerializeField] private GameObject[] targetCity = new GameObject[3];
     [SerializeField] private GameObject[] trashDrops = new GameObject[3];
-    private EnemySpawner enemySpawner;
-    [SerializeField] private Transform targetPlayer;
+    private Transform targetPlayer;
+    private Transform currentTarget;
     private Rigidbody rigidbody;
+    private EnemySpawner enemySpawner;
 
+    [SerializeField] private float defaultSpeed;
+    [SerializeField] private float bonusSpeed;
     private float currentMoveSpeed;
-    public float defaultSpeed;
-    public float bonusSpeed;
     private float rotateSpeed = 10f;
-    public bool isGrounded;
+    private bool isGrounded;
 
-    public float rangeDetected; 
-    public int damagePlayer; 
-    public int damageCity;
+    [SerializeField] private float rangeDetected;
+    [SerializeField] private int damageToPlayer;
+    [SerializeField] private int damageToCity;
 
-    public float sphereCastRadius = 0.7f;
-    public int randomIndexTarget;
+    [SerializeField] private float dropInterval = 3f;
+    private float timerToDrop;
 
-    private float timer;
-    public float timerToDrop = 3f;
-
+    private int randomIndexTarget;
     private bool canDamage = true;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
         targetPlayer = FindObjectOfType<Player>().transform;
+
         currentTarget = targetCity[randomIndexTarget].transform;
         randomIndexTarget = Random.Range(0, 3);
-        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     void Update()
@@ -79,14 +80,14 @@ public class EnemyController : MonoBehaviour
     private void RandomDropWithMove() 
     {
         float distanceToCity = Vector3.Distance(transform.position, targetCity[randomIndexTarget].transform.position);
-        timer -= Time.deltaTime;
+        timerToDrop -= Time.deltaTime;
 
         if (distanceToCity > rangeDetected && transform.position.magnitude > 0)
         {
-            if (timer <= 0)
+            if (timerToDrop <= 0)
             {
                 DropTrash();
-                timer = timerToDrop;
+                timerToDrop = dropInterval;
             }
         }
     }
@@ -102,12 +103,12 @@ public class EnemyController : MonoBehaviour
         {
             DropTrash();
             canDamage = false;
-            collision.gameObject.GetComponent<PlayerStatus>().TakeDamage(damagePlayer);
+            collision.gameObject.GetComponent<PlayerStatus>().TakeDamage(damageToPlayer);
             Destroy(gameObject);
         }
         else if(collision.collider.gameObject.CompareTag("City")) 
         {         
-            collision.gameObject.GetComponent<City>().TakeDamage(damageCity);
+            collision.gameObject.GetComponent<City>().TakeDamage(damageToCity);
             DropTrash();
             Destroy(gameObject);
         }

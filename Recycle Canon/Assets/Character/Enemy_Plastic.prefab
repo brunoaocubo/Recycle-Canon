@@ -154,17 +154,12 @@ MonoBehaviour:
   - {fileID: 9104285973210083486, guid: 5180c153327c54941912c11cb04def92, type: 3}
   - {fileID: 5160915358309369932, guid: a9b8dbb3bc6870b4d8f6ef3b482327d3, type: 3}
   - {fileID: 7910346553925140753, guid: 06bfeb975283586418a1ba092b1a38d7, type: 3}
-  targetPlayer: {fileID: 2608483271059921469, guid: 81f103bc9e3604047a5b5813f5430f76,
-    type: 3}
   defaultSpeed: 3
   bonusSpeed: 5
-  isGrounded: 0
   rangeDetected: 5
-  damagePlayer: 1
-  damageCity: 1
-  sphereCastRadius: 0.7
-  randomIndexTarget: 0
-  timerToDrop: 3
+  damageToPlayer: 1
+  damageToCity: 1
+  dropInterval: 3
 --- !u!114 &6051357465254018439
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,9 +7,9 @@ public class City : MonoBehaviour
     private float health = 20;
     public float Health { get => health; }
 
-    public void TakeDamage(int valueDamage)
+    public void TakeDamage(int damageValue)
     {
-        health -= valueDamage;
+        health -= damageValue;
 
         if (health <= 0)
         {
@@ -18,8 +18,8 @@ public class City : MonoBehaviour
         }
     }
 
-    void Update()
+    public void IncreaseHealth(float healthValue) 
     {
-        
+        health += healthValue;
     }
 }

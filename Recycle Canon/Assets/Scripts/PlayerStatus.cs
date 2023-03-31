@@ -17,7 +17,7 @@ public class PlayerStatus : MonoBehaviour
             lives = 0;
         }
     }
-    public void IncreaseLifePlayer(int valueHeal)
+    public void IncreaseHealth(int valueHeal)
     {
         lives += valueHeal;
 

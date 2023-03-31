@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class EnemyStatus : MonoBehaviour
 {
-    private int lives = 3;
+    private int livesEnemy = 3;
+    public int LivesEnemy { get => livesEnemy; }
 
-    public int Lives { get => lives; }
+    private int livesBoss = 20;
+    public int LivesBoss { get => livesEnemy; }
+
+    private bool isDead = false;
+    public bool IsDead { get => isDead; }
 
     public void TakeDamage(int valueDamage)
     {
-        lives -= valueDamage;
+        livesEnemy -= valueDamage;
 
-        if (lives <= 0)
+        if (livesEnemy <= 0)
         {
-            lives = 0;
+            livesEnemy = 0;
             Destroy(gameObject);
         }
     }
 
     public void TakeDamageBoss(int valueDamage) 
     {
-        lives -= valueDamage;
+        livesBoss -= valueDamage;
 
-        if (lives <= 0)
+        if (livesBoss <= 0)
         {
-            lives = 0;
+            livesBoss = 0;
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if(livesBoss <= 0) 
+        {
+            isDead = true;
         }
     }
 }

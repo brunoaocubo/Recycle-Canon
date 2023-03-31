@@ -9,7 +9,7 @@ public class SkinSelector : MonoBehaviour
     public void PlayGame() 
     {
         PlayerPrefs.SetInt("indexSelectedCharacter", indexSelectedCharacter);
-        SceneManager.LoadScene(3, LoadSceneMode.Single);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void NextCharacter() 
