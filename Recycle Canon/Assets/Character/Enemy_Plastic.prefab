@@ -108,11 +108,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5893043783718580172}
   - component: {fileID: 7825115324218536551}
+  - component: {fileID: 6051357465254018439}
   - component: {fileID: 664788551163065230}
   - component: {fileID: 7873004863584362032}
   m_Layer: 7
   m_Name: Enemy_Plastic
-  m_TagString: Untagged
+  m_TagString: EnemyPlastic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,25 +146,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617c2754eb6684e43b58630b4ca1be08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeEnemy: 0
-  trashDrops:
-  - {fileID: 9104285973210083486, guid: 5180c153327c54941912c11cb04def92, type: 3}
-  - {fileID: 5160915358309369932, guid: a9b8dbb3bc6870b4d8f6ef3b482327d3, type: 3}
-  - {fileID: 7910346553925140753, guid: 06bfeb975283586418a1ba092b1a38d7, type: 3}
   targetCity:
   - {fileID: 5117430183458602718, guid: d23b351134b0fc7488d80976116dcf01, type: 3}
   - {fileID: 800688002568714680, guid: 58d8404aa2d520449a0f3b76c863282a, type: 3}
   - {fileID: 9188702616711229329, guid: 1120f193413a22f4ebb83ebdf38b3ac9, type: 3}
+  trashDrops:
+  - {fileID: 9104285973210083486, guid: 5180c153327c54941912c11cb04def92, type: 3}
+  - {fileID: 5160915358309369932, guid: a9b8dbb3bc6870b4d8f6ef3b482327d3, type: 3}
+  - {fileID: 7910346553925140753, guid: 06bfeb975283586418a1ba092b1a38d7, type: 3}
   targetPlayer: {fileID: 2608483271059921469, guid: 81f103bc9e3604047a5b5813f5430f76,
     type: 3}
   defaultSpeed: 3
-  bonusSpeed: 6
+  bonusSpeed: 5
   isGrounded: 0
   rangeDetected: 5
   damagePlayer: 1
-  damageCity: 2
+  damageCity: 1
   sphereCastRadius: 0.7
   randomIndexTarget: 0
+  timerToDrop: 3
+--- !u!114 &6051357465254018439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670916041164134398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa698dd3d0062fc45b7272be0535a39a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &664788551163065230
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -193,4 +206,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0

@@ -2,20 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TypeEnemy
-{
-    Organic,
-    Plastic,
-    Metal
-}
 
 public class EnemyController : MonoBehaviour
 {
-    public TypeEnemy typeEnemy;
-    public GameObject[] trashDrops;
     private Transform currentTarget;
-    public GameObject[] targetCity = new GameObject[3]; 
-    public Transform targetPlayer;
+    [SerializeField] private GameObject[] targetCity = new GameObject[3];
+    [SerializeField] private GameObject[] trashDrops = new GameObject[3];
+    private EnemySpawner enemySpawner;
+    [SerializeField] private Transform targetPlayer;
     private Rigidbody rigidbody;
 
     private float currentMoveSpeed;
@@ -31,23 +25,25 @@ public class EnemyController : MonoBehaviour
     public float sphereCastRadius = 0.7f;
     public int randomIndexTarget;
 
-    public float timer = 0;
+    private float timer;
+    public float timerToDrop = 3f;
+
+    private bool canDamage = true;
     void Start()
     {
-        randomIndexTarget = Random.Range(0, 3);
-        currentTarget = targetCity[randomIndexTarget].transform;
         rigidbody = GetComponent<Rigidbody>();
-        //targetCity = FindObjectOfType<City>().transform;
         targetPlayer = FindObjectOfType<Player>().transform;
-
-        //typeEnemy = (TypeEnemy)Random.Range(0, 2);
+        currentTarget = targetCity[randomIndexTarget].transform;
+        randomIndexTarget = Random.Range(0, 3);
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     void Update()
     {
         EnemyMovement();
+        RandomDropWithMove();
 
-        if (Physics.Raycast(transform.position, Vector3.down, 1f)) 
+        if (Physics.Raycast(transform.position, Vector3.down)) 
         {
             isGrounded = true;
         }
@@ -78,43 +74,50 @@ public class EnemyController : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-
-
     }
-    private void FixedUpdate()
+
+    private void RandomDropWithMove() 
     {
         float distanceToCity = Vector3.Distance(transform.position, targetCity[randomIndexTarget].transform.position);
-        
-        if (distanceToCity >= rangeDetected)
+        timer -= Time.deltaTime;
+
+        if (distanceToCity > rangeDetected && transform.position.magnitude > 0)
         {
-            timer -= Time.deltaTime;
-            DropTrash();
+            if (timer <= 0)
+            {
+                DropTrash();
+                timer = timerToDrop;
+            }
         }
     }
 
     private void DropTrash() 
-    {        
-        if (timer <= 0)
-        {
-            Instantiate(trashDrops[(int)typeEnemy], transform.position, Quaternion.identity);
-            timer = 6f;
-        }       
+    {                
+        Instantiate(trashDrops[(int)enemySpawner.TypeEnemy], transform.position, Quaternion.identity);    
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player") 
+        if(collision.collider.gameObject.CompareTag("Player") && canDamage) 
         {
-            collision.collider.GetComponent<PlayerStatus>().TakeDamage(damagePlayer);
             DropTrash();
-            Destroy(this.gameObject);
+            canDamage = false;
+            collision.gameObject.GetComponent<PlayerStatus>().TakeDamage(damagePlayer);
+            Destroy(gameObject);
         }
-
-        else if(collision.gameObject.tag == "City") 
-        {
-            collision.collider.GetComponent<City>().TakeDamage(damageCity);
+        else if(collision.collider.gameObject.CompareTag("City")) 
+        {         
+            collision.gameObject.GetComponent<City>().TakeDamage(damageCity);
             DropTrash();
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("City")) 
+        {
+            canDamage = true;
         }
     }
 }

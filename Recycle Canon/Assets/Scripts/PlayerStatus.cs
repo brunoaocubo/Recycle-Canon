@@ -15,7 +15,6 @@ public class PlayerStatus : MonoBehaviour
         if(lives <= 0) 
         {
             lives = 0;
-            Debug.Log("Vida do player chegou a 0");
         }
     }
     public void IncreaseLifePlayer(int valueHeal)
@@ -25,8 +24,6 @@ public class PlayerStatus : MonoBehaviour
         if(lives >= 3) 
         {
             lives = 3;
-            Debug.Log("Vida do player chegou a 3");
-
         }
     }
 }

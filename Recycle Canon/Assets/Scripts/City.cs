@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class City : MonoBehaviour
 {
-    private float health = 10;
+    private float health = 20;
     public float Health { get => health; }
 
     public void TakeDamage(int valueDamage)

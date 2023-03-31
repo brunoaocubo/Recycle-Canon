@@ -8,60 +8,48 @@ public class ControlCamera : MonoBehaviour
     private CinemachineVirtualCamera virtualCamera;
     public CinemachineCameraOffset cameraOffset;
 
-    public float orthoSyzeDefault;
-    public float orthoSyzeType1;
-    public float orthoSyzeType2;
-    public float orthoSyzeType3;
-
-    Vector2 resolution0 = new Vector2(1280, 720);
-    Vector2 resolution1 = new Vector2(1920, 1080);
-    Vector2 resolution2 = new Vector2(2560, 1080);
+    [SerializeField] private float orthoSyzeDefault;
+    [SerializeField] private float orthoSyzeType1;
+    [SerializeField] private float orthoSyzeType2;
+    [SerializeField] private float orthoSyzeType3;
+    //[SerializeField] private float cameraOffsetValue;
 
     void Start()
     {
         virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         Screen.orientation = ScreenOrientation.Portrait;
 
-        if (Camera.main.aspect >= 0.5625f) // altura da tela é maior que a largura (9:16)
+        if (Camera.main.aspect >= 0.5625f) 
         {
-            //Debug.Log("9:16");
             cameraOffset.enabled = false;
-            virtualCamera.m_Lens.OrthographicSize = orthoSyzeDefault;
+            virtualCamera.m_Lens.OrthographicSize = orthoSyzeDefault;          
+            Debug.Log("Res: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + " | AspectRatio: " + Camera.main.aspect);
         }
-        else if (Camera.main.aspect >= 0.5f) // altura da tela é maior que a largura (10:16)
-        {
+        else if (Camera.main.aspect >= 0.5f) 
+        { 
             cameraOffset.enabled = true;
             cameraOffset.m_Offset.y = 2;
-            virtualCamera.m_Lens.OrthographicSize = orthoSyzeType1;
+            virtualCamera.m_Lens.OrthographicSize = orthoSyzeType1;        
+            Debug.Log("Res: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + " | AspectRatio: " + Camera.main.aspect);
         }
-        else if (Camera.main.aspect >= 0.666f) // altura da tela é maior que a largura (2:3)
+        else if (Camera.main.aspect >= 0.666f) 
         {
-            //Debug.Log("2:3");
             cameraOffset.enabled = false;
             virtualCamera.m_Lens.OrthographicSize = orthoSyzeType2;
+            Debug.Log("Res: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + " | AspectRatio: " + Camera.main.aspect);
         }
-        else if (Camera.main.aspect <= 0.75f) // altura da tela é maior que a largura (3:4)
-        {
-            //Debug.Log("9:18");
+        else if (Camera.main.aspect <= 0.75f) 
+        {  
             cameraOffset.enabled = true;
             cameraOffset.m_Offset.y = 3;
             virtualCamera.m_Lens.OrthographicSize = orthoSyzeType3;
+            Debug.Log("Res: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + " | AspectRatio: " + Camera.main.aspect);
         }
-        else // altura da tela é menor que a largura (1:2)
+        else 
         {
-            //Debug.Log("1:2");
             cameraOffset.enabled = false;
             virtualCamera.m_Lens.OrthographicSize = orthoSyzeType3;
+            Debug.Log("Res: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + " | AspectRatio: " + Camera.main.aspect);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Screen.height == 1280 && Screen.width == 720 ||Screen.height == 1920 && Screen.width == 1080||Screen.height == 2560 && Screen.width == 1080)  
-        //{virtualCamera.m_Lens.OrthographicSize = orthoSyzeDefault;}
-
-        //if (Screen.height == 1280 && Screen.width == 720 || Screen.height == 1920 && Screen.width == 1080 || Screen.height == 2560 && Screen.width == 1080)
-        //{ virtualCamera.m_Lens.OrthographicSize = orthoSyzeDefault; }
     }
 }

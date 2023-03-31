@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
     private float sphereCastRadius = 1.25f;
     private float playerRadius = 0.7f;
     private float playerHeight = 2f;
+    private float cameraOffsetValue;
 
     void Start()
     {
         collectorContainer = FindObjectOfType<CollectorContainer>();
+        cameraOffsetValue = FindObjectOfType<CinemachineCameraOffset>().m_Offset.y;
     }
 
     void Update()
@@ -23,7 +25,7 @@ public class Player : MonoBehaviour
         if(Input.touchCount > 0) 
         {
             Touch touch = playerInput.GetTouchScreen();
-            if(touch.position.x > Screen.width/3 && touch.position.y < Screen.height/3 && touch.phase == TouchPhase.Began) 
+            if(touch.position.x > Screen.width/2 && touch.position.y < Screen.height/2 && touch.phase == TouchPhase.Began) 
             {
                 PlayerCheckObjects();
             }
@@ -34,18 +36,14 @@ public class Player : MonoBehaviour
     {
         Vector2 inputVector = playerInput.GetMovementVectorNormalizedRight();
         Vector3 moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
-
         float moveDistance = moveSpeed * Time.deltaTime;
-
-        // Obter o tamanho da tela em pixels
-        Vector2 screenSize = new Vector2(Screen.height, Screen.width);
 
         // Obter a largura da tela em unidades do mundo
         float screenWidth = Camera.main.orthographicSize * 2f * Camera.main.aspect;
 
         // Calcular o limite da tela em unidades do mundo
         float screenLimitX = screenWidth / 2f;
-        float screenLimitZ = Camera.main.orthographicSize;
+        float screenLimitZ = Camera.main.orthographicSize + cameraOffsetValue;
 
         // Restringir o movimento para dentro dos limites da tela
         Vector3 newPosition = transform.position + moveDirection * moveDistance;
@@ -95,19 +93,28 @@ public class Player : MonoBehaviour
         {
             switch (hit.collider.tag)
             {
-                case "TrashOrganic":
-                    collectorContainer.AddTrashOrganic(Random.Range(1, 3));
-                    Destroy(hit.collider.gameObject);
+                case "TrashOrganic":          
+                    if(collectorContainer.AmmountTrashOrganic <= 6) 
+                    {
+                        collectorContainer.AddTrashOrganic(Random.Range(1, 3));
+                        Destroy(hit.collider.gameObject);
+                    }        
                     break;
 
                 case "TrashPlastic":
-                    collectorContainer.AddTrashPlastic(Random.Range(1, 3));
-                    Destroy(hit.collider.gameObject);
+                    if (collectorContainer.AmmountTrashPlastic <= 6)
+                    {
+                        collectorContainer.AddTrashPlastic(Random.Range(1, 3));
+                        Destroy(hit.collider.gameObject);
+                    }
                     break;
 
                 case "TrashMetal":
-                    collectorContainer.AddTrashMetal(Random.Range(1, 3));
-                    Destroy(hit.collider.gameObject);
+                    if (collectorContainer.AmmountTrashMetal <= 6)
+                    {
+                        collectorContainer.AddTrashMetal(Random.Range(1, 3));
+                        Destroy(hit.collider.gameObject);
+                    }
                     break;
 
                 case "ContainerOrganic":

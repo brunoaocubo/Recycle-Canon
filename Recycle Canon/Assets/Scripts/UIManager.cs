@@ -53,10 +53,14 @@ public class UIManager : MonoBehaviour
     {
         if(playerStatus.Lives <= 0 || cityStatus.Health <= 0) 
         {
-            phaseFail = true;
             panelSettingsScene.SetActive(true);
-
+            buttonResumeGame.SetActive(false);
+            buttonReloadGame.SetActive(true);
             FreezeGame(true);
+        }
+        else 
+        {
+            FreezeGame(false);
         }
 
         trashOrganicText.text = collectorContainer.AmmountTrashOrganic.ToString();
@@ -71,30 +75,32 @@ public class UIManager : MonoBehaviour
 
     public void OpenSettingsScene()
     {
+        FreezeGame(true);
         panelSettingsScene.SetActive(true);
         buttonSettingsScene.SetActive(false);
         buttonResumeGame.SetActive(true);
-        buttonReloadGame.SetActive(false);
-        FreezeGame(true);    
+        buttonReloadGame.SetActive(false);  
     }
 
     public void ResumeScene()
     {
+        FreezeGame(false);
         panelSettingsScene.SetActive(false);
         buttonSettingsScene.SetActive(true);
-        FreezeGame(false);
     }
 
     public void LoadHome()
     {
+        FreezeGame(false);
         SceneManager.LoadScene(0);
     }
 
     public void ReloadScene()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
+    
     private void FreezeGame(bool freeze) 
     {
         if (freeze) {Time.timeScale = 0;}

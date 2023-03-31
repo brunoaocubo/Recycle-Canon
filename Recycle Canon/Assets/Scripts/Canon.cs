@@ -21,7 +21,9 @@ public class Canon : MonoBehaviour
 
     [SerializeField] Transform pivotCanon;
     [SerializeField] private GameObject[] bulletsPrefab;
+
     private AmmoType selectedAmmoType;
+    public AmmoType ammoType { get => selectedAmmoType; }
 
     private float screenWidth;
     private float screenHeight;
@@ -44,7 +46,7 @@ public class Canon : MonoBehaviour
         {
             Touch touch = playerInput.GetTouchScreen();
 
-            if (touch.position.x < screenWidth/2 && touch.position.y < screenHeight/2 && touch.phase == TouchPhase.Began)
+            if (touch.position.x < screenWidth/2 && touch.position.y < screenHeight/1.5 && touch.phase == TouchPhase.Began)
             {
                 Fire();
             }          
@@ -63,7 +65,6 @@ public class Canon : MonoBehaviour
             case AmmoType.Organic:
                 if(collectorContainer.OrganicAmmo > 0) 
                 {
-
                     Instantiate(bulletsPrefab[0], pivotCanon.position, pivotCanon.rotation);
                     collectorContainer.DecreaseOrganicAmmo();
                 }
